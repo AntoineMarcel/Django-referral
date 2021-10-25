@@ -8,7 +8,7 @@ class Campaign(models.Model):
     token = models.CharField(max_length=60, default="1234")
     background_color = models.CharField(max_length=60)
     text_color = models.CharField(max_length=60)
-    message = models.CharField(max_length=60)
+    message = models.CharField(max_length=200)
 
     def message_personnalized(self, parrain):
         return self.message.replace("{{firstName}}", parrain.firstName)
