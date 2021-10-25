@@ -10,6 +10,9 @@ class Campaign(models.Model):
     text_color = models.CharField(max_length=60)
     message = models.CharField(max_length=60)
 
+    def message_personnalized(self, parrain):
+        return self.message.replace("{{firstName}}", parrain.firstName)
+
 class Steps(models.Model):
     campaign = models.ForeignKey(
         Campaign,

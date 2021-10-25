@@ -3,14 +3,20 @@ from rest_framework import serializers
 
 from .models import Parrain, Campaign
 
-class CampaignSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Campaign
-        fields = ('message', "background_color", "text_color")
-
 class ParrainSerializer(serializers.ModelSerializer):
-    campaign = CampaignSerializer()
+    message = serializers.SerializerMethodField()
+    background_color = serializers.SerializerMethodField()
+    text_color = serializers.SerializerMethodField()
 
     class Meta:
         model = Parrain
-        fields = ('campaign',)
+        fields = ('message', 'background_color', 'text_color')
+
+    def get_message(self, obj):
+        return obj.campaign.message_personnalized(obj)
+
+    def get_background_color(self, obj):
+        return obj.campaign.background_color
+
+    def get_text_color(self, obj):
+        return obj.campaign.text_color
