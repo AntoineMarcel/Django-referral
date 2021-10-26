@@ -10,19 +10,22 @@ class Parrains(APIView):
             try:
                 item = Parrain.objects.get(userCode=userCode)
                 if not item.campaign.token == campaignToken:
-                    return Response({"status": "error"})
+                    return Response({"status": "error"}, status=status.HTTP_400_BAD_REQUEST)
             except:
-                return Response({"status": "error"})
+                return Response({"status": "error"}, status=status.HTTP_400_BAD_REQUEST)
             serializer = ParrainSerializer(item)
             item.visits = item.visits + 1
             item.save()
             return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
-        return Response({"status": "error"})
+        return Response({"status": "error"}, status=status.HTTP_400_BAD_REQUEST)
 
 class CreateParrains(APIView):
     def post(self, request):
-       
-        return Response({"status": "error"})
+        print(request.path)
+        data = {
+            "data" : request.path
+        }
+        return Response({"status": "error", "data": data})
         try:
             campaign = Campaign.objects.get(token=request.data['campaignTk'])
             parrain = {
@@ -51,4 +54,4 @@ class CreateParrains(APIView):
                 "except" : str(e),
                 "data" : request.data
             }
-            return Response({"status": "error", "data": data})
+            return Response({"status": "error", "data": data}, status=status.HTTP_400_BAD_REQUEST)
