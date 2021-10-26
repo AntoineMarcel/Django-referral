@@ -21,11 +21,8 @@ class Parrains(APIView):
 
 class CreateParrains(APIView):
     def post(self, request):
-        print(request.path)
-        data = {
-            "data" : request.path
-        }
-        return Response({"status": "error", "data": data})
+       
+        return Response({"status": "error"})
         try:
             campaign = Campaign.objects.get(token=request.data['campaignTk'])
             parrain = {
