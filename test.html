@@ -1,0 +1,49 @@
+<script>
+const campain_id = "1234"
+var $jscomp=$jscomp||{};$jscomp.scope={};$jscomp.createTemplateTagFirstArg=function(a){return a.raw=a};$jscomp.createTemplateTagFirstArgWithRaw=function(a,b){a.raw=b;return a};var queryString=window.location.search,urlParams=new URLSearchParams(queryString),userCode=urlParams.get("userCode");
+userCode&&(document.cookie="userCode="+userCode,console.log(document.cookie),fetch("https://amarcel.pythonanywhere.com/parrains/"+campain_id+"/"+userCode).then(function(a){return a.json()}).then(function(a){console.log(a);console.log(a.data.background_color);var b=document.createElement("div");b.style.width="100%";b.style.minHeight="48px";b.style.background=a.data.background_color;b.style.color=a.data.text_color;b.style.display="table";var c=document.createElement("div");c.style.display="table-cell";
+c.style.verticalAlign="middle";var d=document.createElement("div");d.style.fontFamily="Inter,sans-serif";d.style.textAlign="center";d.innerHTML=a.data.message;c.append(d);b.append(c);document.body.prepend(b)})["catch"](function(a){console.log("Wrong userCode or token",a)}));
+</script>
+
+<!-- 
+https://closure-compiler.appspot.com/    
+const campain_id = "1234"
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const userCode = urlParams.get('userCode')
+if (userCode)
+{
+    document.cookie = `userCode=${userCode}`;
+    console.log(document.cookie)
+    fetch(`https://amarcel.pythonanywhere.com/parrains/${campain_id}/${userCode}`)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+            console.log(data["data"]["background_color"]);
+            var table = document.createElement("div");
+            table.style.width = "100%";
+            table.style.minHeight = "48px";
+            table.style.background = data["data"]["background_color"];
+            table.style.color = data["data"]["text_color"];
+            table.style.display = "table";
+
+            var table_cell = document.createElement("div");
+            table_cell.style.display = "table-cell";
+            table_cell.style.verticalAlign = "middle";
+
+
+            var text = document.createElement("div");
+            text.style.fontFamily = "Inter,sans-serif";
+            text.style.textAlign = "center";
+            text.innerHTML = data["data"]["message"];
+
+            table_cell.append(text)
+            table.append(table_cell)
+            document.body.prepend(table);
+        })
+        .catch(function (err) {
+            console.log("Wrong userCode or token", err);
+    });
+} -->

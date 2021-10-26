@@ -20,3 +20,8 @@ class ParrainSerializer(serializers.ModelSerializer):
 
     def get_text_color(self, obj):
         return obj.campaign.text_color
+
+class CreateParrainSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Parrain
+        fields = ('__all__')
