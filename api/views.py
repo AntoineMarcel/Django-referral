@@ -23,12 +23,14 @@ class CreateParrains(APIView):
     def post(self, request):
         try:
             campaign = Campaign.objects.get(token=request.data['campaignTk'])
-            if not request.data._mutable:
-                request.data._mutable = True
-            request.data['campaign'] = campaign.id
-            request.data['step'] = Steps.objects.get(campaign=campaign, order=0).id
-            request.data.pop('campaignTk')
-            serializer = CreateParrainSerializer(data=request.data)
+            parrain = {
+                'campaign':campaign.id,
+                'firstName': request.data['firstName'],
+                'lastName': request.data['lastName'],
+                'email': request.data['email'],
+                'step': Steps.objects.get(campaign=campaign, order=0).id,
+            }
+            serializer = CreateParrainSerializer(data=parrain)
             if serializer.is_valid():
                 serializer.save()
                 return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
