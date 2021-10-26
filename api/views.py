@@ -21,11 +21,10 @@ class Parrains(APIView):
 
 class CreateParrains(APIView):
     def post(self, request):
-        print(request.headers["Host"])
         try:
             campaign = Campaign.objects.get(token=request.data['campaignTk'])
-            if not request.META['HTTP_HOST'] in campaign.web_site:
-                return Response({"status": "error", "data": {"test": request.headers, "current" : request.META['HTTP_HOST'], "configured" :campaign.web_site}}, status=status.HTTP_400_BAD_REQUEST)
+            if not campaign.web_site in request.headers["Origin"]:
+                return Response({"status": "error", "data": {"origin": request.headers["Origin"], "configured" :campaign.web_site}}, status=status.HTTP_400_BAD_REQUEST)
             parrain = {
                 'campaign':campaign.id,
                 'firstName': request.data['firstName'],
