@@ -24,10 +24,10 @@ class CreateParrains(APIView):
         if request.data['userCode']:
             try:
                 fromUser = Parrain.objects.get(userCode=request.data['userCode'])
-                if not item.campaign.token == request.data['campaignTk']:
+                if not fromUser.campaign.token == request.data['campaignTk']:
                     return Response({"status": "error"})
             except:
-                pass
+                return Response({"status": "error"})
         try:
             campaign = Campaign.objects.get(token=request.data['campaignTk'])
             parrain = {
@@ -47,7 +47,6 @@ class CreateParrains(APIView):
             else:
                 return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            print(e)
             data = {
                 "except" : str(e),
                 "data" : request.data
