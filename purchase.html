@@ -1,68 +1,41 @@
 <script>
-const campain_id = "1234"
-const data = {
-    "firstName": "test",
-    "lastName": "test",
-    "email": "test2@test.fr",
-    "campaignTk": "1234",
+var data = {
+    campaignTk: "1234",
+    firstName: "test",
+    lastName: "test",
+    email: "test2@test.fr",
 };
+var $jscomp$optchain$tmpm675467045$0;data.userCode=(null==($jscomp$optchain$tmpm675467045$0=document.cookie.match("(^|;)\\s*userCode\\s*=\\s*([^;]+)"))?void 0:$jscomp$optchain$tmpm675467045$0.pop())||"";
+fetch("https://amarcel.pythonanywhere.com/create_parrains/",{method:"POST",headers:{Accept:"application/json","Content-Type":"application/json"},body:JSON.stringify(data)}).then(function(a){return a.json()}).then(function(a){document.cookie="userCode=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;"})["catch"](function(a){console.log(" ",a)});
 
-// curl -X POST -F 'firstName="test"' -F 'lastName="test"' -F 'email="test2@test.fr"' -F 'campaignTk="1234"' "http://127.0.0.1:8000/create_parrains"
+</script>
+
+<!-- 
+https://closure-compiler.appspot.com/    
+var data = {
+    campaignTk: "1234",
+    firstName: "test",
+    lastName: "test",
+    email: "test2@test.fr",
+};
+data["userCode"] = document.cookie.match('(^|;)\\s*userCode\\s*=\\s*([^;]+)')?.pop() || ''
+
 fetch("https://amarcel.pythonanywhere.com/create_parrains/",
     {
         method: "POST",
+        headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+        },
         body: JSON.stringify(data)
     })
     .then(function (response) {
         return response.json();
     })
     .then(function (data) {
-        console.log(data);
+        document.cookie = 'userCode=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     })
     .catch(function (err) {
         console.log(" ", err);
 });
-</script>
-
-<!-- 
-https://closure-compiler.appspot.com/    
-const campain_id = "1234"
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const userCode = urlParams.get('userCode')
-if (userCode)
-{
-    document.cookie = `userCode=${userCode}`;
-    console.log(document.cookie)
-    fetch(`https://amarcel.pythonanywhere.com/parrains/${campain_id}/${userCode}`)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            console.log(data);
-            console.log(data["data"]["background_color"]);
-            var table = document.createElement("div");
-            table.style.width = "100%";
-            table.style.minHeight = "48px";
-            table.style.background = data["data"]["background_color"];
-            table.style.color = data["data"]["text_color"];
-            table.style.display = "table";
-
-            var table_cell = document.createElement("div");
-            table_cell.style.display = "table-cell";
-            table_cell.style.verticalAlign = "middle";
-
-
-            var text = document.createElement("div");
-            text.style.fontFamily = "Inter,sans-serif";
-            text.style.textAlign = "center";
-            text.innerHTML = data["data"]["message"];
-
-            table_cell.append(text)
-            table.append(table_cell)
-            document.body.prepend(table);
-        })
-        .catch(function (err) {
-            console.log("Wrong userCode or token", err);
-    });
-} -->
+-->
