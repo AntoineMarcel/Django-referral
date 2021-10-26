@@ -23,7 +23,7 @@ class CreateParrains(APIView):
     def post(self, request):
         try:
             campaign = Campaign.objects.get(token=request.data['campaignTk'])
-            if not request.GET._mutable:
+            if not request.data._mutable:
                 request.data._mutable = True
             request.data['campaign'] = campaign.id
             request.data['step'] = Steps.objects.get(campaign=campaign, order=0).id
