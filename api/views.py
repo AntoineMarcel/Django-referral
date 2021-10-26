@@ -33,5 +33,10 @@ class CreateParrains(APIView):
                 return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
             else:
                 return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-        except:
-            return Response({"status": "error", "data": request.data})
+        except Exception as e:
+            print(e)
+            data = {
+                "except" : str(e),
+                "data" : request.data
+            }
+            return Response({"status": "error", "data": data})
