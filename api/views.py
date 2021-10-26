@@ -33,6 +33,13 @@ class CreateParrains(APIView):
             serializer = CreateParrainSerializer(data=parrain)
             if serializer.is_valid():
                 serializer.save()
+                if request.data['userCode']:
+                    try:
+                        fromUser = Parrain.objects.get(userCode=userCode)
+                        fromUser.buy = fromUser.buy + 1
+                        fromUser.save()
+                    except:
+                        pass
                 return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
             else:
                 return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
