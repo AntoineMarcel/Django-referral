@@ -23,7 +23,7 @@ class CreateParrains(APIView):
     def post(self, request):
         if request.data['userCode']:
             try:
-                fromUser = Parrain.objects.get(userCode=userCode)
+                fromUser = Parrain.objects.get(userCode=request.data['userCode'])
                 if not item.campaign.token == request.data['campaignTk']:
                     return Response({"status": "error"})
             except:
