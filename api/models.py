@@ -23,7 +23,10 @@ class Steps(models.Model):
         Campaign,
         on_delete=models.CASCADE,
     )
-    order = models.IntegerField(unique=True)
+    order = models.IntegerField()
+
+    class Meta:
+        unique_together = ('campaign', 'order',)
 
 class Parrain(models.Model):
     campaign = models.ForeignKey(
